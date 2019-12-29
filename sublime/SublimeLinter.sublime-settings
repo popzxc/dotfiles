@@ -1,0 +1,10 @@
+// SublimeLinter Settings - User
+{
+    "linters": {
+        "pylint": {
+            "args": [
+                "--max-line-length=120"
+            ]
+        }
+    }
+}

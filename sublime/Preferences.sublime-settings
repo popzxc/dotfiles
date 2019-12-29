@@ -1,0 +1,10 @@
+{
+	"font_size": 10,
+	"ignored_packages":
+	[
+		"Rust",
+		"sublack",
+		"Vintage"
+	],
+	"translate_tabs_to_spaces": true
+}
