@@ -4,9 +4,6 @@
 " 3. Compile `universal-ctags` from source -- `snap` package currently don't work with `tagbar` (https://github.com/universal-ctags/ctags).
 " 4. Don't forget to launch `:PlugInstall` on first launch!
 
-set directory=~/.vim/backup
-set backupdir=~/.vim/backup " keep swap files here
-
 filetype on
 
 " Plugins
@@ -21,6 +18,11 @@ Plug 'itchyny/lightline.vim'                                      " configurable
 Plug 'airblade/vim-gitgutter'                                     " Git diffs in gutter
 Plug 'mg979/vim-visual-multi'                                     " Multiple cursors selection
 Plug 'sickill/vim-monokai'                                        " Monokai theme for vim
+
+" Autocomplete
+Plug 'roxma/nvim-yarp'                                            " Needed for deoplete
+Plug 'roxma/vim-hug-neovim-rpc'                                   " Needed for deoplete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     " Autocompletion
 
 " Rust
 Plug 'dense-analysis/ale'                                         " Syntax checking plugin (async instead of syntastic)
@@ -38,7 +40,14 @@ call plug#end()
 " End of plugins here
 " ===================
 
+" deoplete
+" ========
+
+let g:deoplete#enable_at_startup = 1
+
 " airline: status bar at the bottom
+" =================================
+
 let g:airline_powerline_fonts=1
 
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -47,9 +56,11 @@ let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_er
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 " Nerd commenter
+" ==============
 filetype plugin on
 
 " Better Unix support
+" ===================
 set viewoptions=folds,options,cursor,unix,slash
 set encoding=utf-8
 
@@ -140,6 +151,11 @@ noremap <C-A-n> :NERDTreeToggle<CR>
 syntax on
 colorscheme monokai
 set shell=/bin/zsh
+
+" Turn off backup
+set nobackup
+set noswapfile
+set nowritebackup
 
 " Automatically change working directory to the currently edited file one.
 set autochdir
