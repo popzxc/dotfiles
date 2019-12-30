@@ -1,6 +1,13 @@
+" Note for the future myself:
+" 1. Obtain neovim (https://github.com/neovim/neovim).
+" 2. Obtain vim-pack (https://github.com/junegunn/vim-plug).
+" 3. Compile `universal-ctags` from source -- `snap` package currently don't work with `tagbar` (https://github.com/universal-ctags/ctags).
+" 4. Don't forget to launch `:PlugInstall` on first launch!
+
 set directory=~/.vim/backup
 set backupdir=~/.vim/backup " keep swap files here
-filetype off                " required
+
+filetype on
 
 " Plugins
 " =======
@@ -10,14 +17,18 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'vim-airline/vim-airline'                                    " bottom status bar
 Plug 'vim-airline/vim-airline-themes'                             " themes for vim-airline
 Plug 'scrooloose/nerdtree'                                        " folders tree
-Plug 'neomake/neomake'                                            " run programs asynchronously and highlight errors
 Plug 'itchyny/lightline.vim'                                      " configurable status line (can be used by coc)
 Plug 'airblade/vim-gitgutter'                                     " Git diffs in gutter
 Plug 'mg979/vim-visual-multi'                                     " Multiple cursors selection
 Plug 'sickill/vim-monokai'                                        " Monokai theme for vim
 
+" Rust
+Plug 'dense-analysis/ale'                                         " Syntax checking plugin (async instead of syntastic)
+Plug 'majutsushi/tagbar'                                          " Browser for tags within file
+Plug 'rust-lang/rust.vim'                                         " Rust lang support
+
 " Haskell
-" Plug 'alx741/vim-stylishask'                                      " Call stylish-haskell on file save
+Plug 'alx741/vim-stylishask'                                      " Call stylish-haskell on file save
 
 " Possibly useful plugins
 "Plug 'scrooloose/nerdcommenter'                                   " code commenter
@@ -35,9 +46,6 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
-" Highlighting for jsonc filetype
-autocmd FileType json syntax match Comment +\/\/.\+$+
-
 " Nerd commenter
 filetype plugin on
 
@@ -45,6 +53,10 @@ filetype plugin on
 set viewoptions=folds,options,cursor,unix,slash
 set encoding=utf-8
 
+" On save
+" =======
+
+" Haskell on-save config.
 function! TrimWhitespace()
     let l:save_cursor = getpos('.')
     %s/\s\+$//e
@@ -62,9 +74,53 @@ augroup format-haskell
     autocmd InsertLeave * write                   " Save buffer automatically on leaving insert mode
 augroup END
 
+" Rust config
+" ===========
+
+" Run rustfmt on save.
+let g:rustfmt_autosave = 1
+
+" Ale config
+" ==========
+
+" General
+
+let g:ale_open_list = 'on_save' " Open list of warnings/errors on save
+
+" For Rust
+
+" Check tests
+let g:ale_rust_cargo_check_tests = 1
+" Use clippy instead of cargo
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+
+" For Python
+
+" Activate venv automatically
+let g:ale_python_auto_pipenv = 1
+
+" Use black
+let g:ale_python_black_use_global = 1
+let g:ale_python_black_options = '--line-length 120'
+
+" Use mypy
+let g:ale_python_mypy_use_global = 1
+let g:ale_python_mypy_options = '--ignore-missing-imports --disallow-untyped-defs --follow-imports=silent'
+
+" Use pylint
+let g:ale_python_pylint_executable = 1
+let g:ale_python_pylint_options = '--max-line-length=120 --disable=bad-continuation,too-few-public-methods'
+
+
+" Tagbar config
+" =============
+
+let g:tagbar_show_linenumbers = 1
+nmap <F8> :TagbarToggle<CR>
+
 " NerdTree config
 " ===============
-let NERDTreeShowHidden=1  " Show hidden files
+let NERDTreeShowHidden = 1    " Show hidden files
 let g:NERDTreeDirArrows = 1
 
 " Open NerdTree on vim by default
@@ -85,6 +141,9 @@ syntax on
 colorscheme monokai
 set shell=/bin/zsh
 
+" Automatically change working directory to the currently edited file one.
+set autochdir
+
 " Auto wrap options
 set formatoptions=qnlj  " convenient wrapping options
 set textwidth=120       " wrap on 120 chars
@@ -96,10 +155,9 @@ set hidden                  " Hide files when leaving them.
 set number                  " Show line numbers.
 set numberwidth=1           " Minimum line number column width.
 set cmdheight=2             " Number of screen lines to use for the commandline.
-set linebreak               " Don't cut lines in the middle of a word .
+set linebreak               " Don't cut lines in the middle of a word.
 set showmatch               " Shows matching parenthesis.
 set matchtime=2             " Time during which the matching parenthesis is shown.
-set background=dark         " Color adapted to dark background.
 set listchars=tab:▸\ ,eol:¬ " Invisible characters representation when :set list.
 set clipboard=unnamedplus   " Copy/Paste to/from clipboard (use '+' as target buffer)
 set cursorline              " Highlight line cursor is currently on
@@ -107,6 +165,10 @@ set completeopt+=noinsert   " Select the first item of popup menu automatically 
 
 " Fancy highlight of the current line
 hi CursorLine term=bold cterm=bold guibg=Grey40
+
+" Highlighting overrides for monokai style
+hi SpellCap term=bold cterm=bold ctermfg=58 guifg=#5f5f00 "rgb=95,95,0 (Dark orange)
+hi SpellBad term=bold cterm=bold ctermbg=52 guibg=#5f0000 "rgb=95,0,0 (Dark red)
 
 " More natural screen splittin
 set splitbelow
