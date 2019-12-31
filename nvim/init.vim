@@ -18,6 +18,8 @@ Plug 'itchyny/lightline.vim'                                      " configurable
 Plug 'airblade/vim-gitgutter'                                     " Git diffs in gutter
 Plug 'mg979/vim-visual-multi'                                     " Multiple cursors selection
 Plug 'sickill/vim-monokai'                                        " Monokai theme for vim
+Plug 'tpope/vim-fugitive'                                         " Git manager
+Plug 'tpope/vim-commentary'                                       " Commenting & uncommenting
 
 " Autocomplete
 Plug 'roxma/nvim-yarp'                                            " Needed for deoplete
