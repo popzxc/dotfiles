@@ -31,12 +31,6 @@ Plug 'dense-analysis/ale'                                         " Syntax check
 Plug 'majutsushi/tagbar'                                          " Browser for tags within file
 Plug 'rust-lang/rust.vim'                                         " Rust lang support
 
-" Haskell
-Plug 'alx741/vim-stylishask'                                      " Call stylish-haskell on file save
-
-" Possibly useful plugins
-"Plug 'scrooloose/nerdcommenter'                                   " code commenter
-
 call plug#end()
 
 " End of plugins here
@@ -65,27 +59,6 @@ filetype plugin on
 " ===================
 set viewoptions=folds,options,cursor,unix,slash
 set encoding=utf-8
-
-" On save
-" =======
-
-" Haskell on-save config.
-function! TrimWhitespace()
-    let l:save_cursor = getpos('.')
-    %s/\s\+$//e
-    call setpos('.', l:save_cursor)
-endfun
-
-command! TrimWhitespace call TrimWhitespace() " Trim whitespace with command
-" autocmd BufWritePre * :call TrimWhitespace()  " Trim whitespace on every save
-" autocmd InsertLeave * write                   " Save buffer automatically on leaving insert mode
-
-augroup format-haskell
-    autocmd!
-    autocmd InsertLeave *.hs call stylishask#StylishaskOnSave()
-    autocmd InsertLeave * :call TrimWhitespace()  " Trim whitespace on every save
-    autocmd InsertLeave * write                   " Save buffer automatically on leaving insert mode
-augroup END
 
 " Rust config
 " ===========
@@ -124,6 +97,12 @@ let g:ale_python_mypy_options = '--ignore-missing-imports --disallow-untyped-def
 let g:ale_python_pylint_executable = 1
 let g:ale_python_pylint_options = '--max-line-length=120 --disable=bad-continuation,too-few-public-methods'
 
+" For Haskell
+
+" ALE will manage both hlint and stylish-haskell.
+
+" Use relude-avare config for hlint.
+let g:ale_haskell_hlint_options = '-h ~/.hlint-relude.yaml'
 
 " Tagbar config
 " =============
