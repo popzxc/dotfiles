@@ -115,3 +115,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Setup user-specific configuration.
+source $HOME/.shell_user_rc

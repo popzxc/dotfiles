@@ -1,7 +1,3 @@
-# Preinstalled Rocksdb & snappy directories
-export ROCKSDB_LIB_DIR=/usr/lib
-export SNAPPY_LIB_DIR=/usr/lib
-
 # Setup `sccache` as a `rustc` wrapper.
 export RUSTC_WRAPPER=sccache
 export SCCACHE_DIR=#SET TO CORRECT VALUE
@@ -9,3 +5,7 @@ export SCCACHE_CACHE_SIZE="50g"
 
 # Override default directory for stack.
 export STACK_ROOT=#SET TO CORRECT VALUE
+
+# Setup zksync
+export ZKSYNC_HOME=#SET TO CORRECT VALUE
+export PATH=$ZKSYNC_HOME/bin:$PATH
