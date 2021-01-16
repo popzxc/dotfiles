@@ -42,3 +42,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Setup user-specific configuration.
 source $HOME/.shell_user_rc
+
+# Setup kubectl aliases
+# Aliases can be downloaded from here: https://github.com/ahmetb/kubectl-aliases
+[ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
