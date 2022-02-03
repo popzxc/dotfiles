@@ -188,7 +188,7 @@ set shiftwidth=4  " column offset when using keys '>' and '<' in normal mode.
 " Toggle display of tabs and EOF
 nnoremap <leader>l :set list!<CR>
 
-" Disable arrow keys and page up / down (use hjkl, baka!)
+" Disable arrow keys and page up / down
 noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>

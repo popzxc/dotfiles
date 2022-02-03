@@ -1,9 +1,0 @@
-"Django Tags",
-"Package Control",
-"Protobuf Syntax Hightlighting",
-"Rust Enhanced",
-"RustFmt",
-"sublack",
-"SublimeLinter",
-"SublimeLinter-contrib-mypy",
-"SublimeLinter-pylint"
