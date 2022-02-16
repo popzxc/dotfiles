@@ -185,10 +185,7 @@ bindsym $mod+r mode "resize"
 
 # Configure gaps
 for_window [class=".*"] border pixel 0
-# gaps left 5
-# gaps right 5
-# gaps bottom 5
-gaps inner 5
+gaps inner 10
 
 # Restore nitrogen
 exec_always --no-startup-id nitrogen --restore
