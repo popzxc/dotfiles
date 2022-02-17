@@ -190,6 +190,9 @@ bindsym $mod+r mode "resize"
 for_window [class=".*"] border pixel 0
 gaps inner 10
 
+# Start picom
+exec_always --no-startup-id picom --config $HOME/.config/picom/picom.conf
+
 # Restore nitrogen
 exec_always --no-startup-id nitrogen --restore
 
